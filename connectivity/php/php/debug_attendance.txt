@@ -1,0 +1,6 @@
+Array
+(
+    [studentId] => 520421322
+    [date] => 2025-04-22
+    [status] => Present
+)

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration | Hostel Management</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                        url('https://media.gettyimages.com/id/1391171928/vector/abstract-shapes-concept-design-background-abstract-square-shapes-background-abstract.jpg?s=612x612&w=0&k=20&c=ViTlukVWoMp_bHG1m4EEuJbJBZ-yADcJFfn3Km7P7FU=') no-repeat center center fixed;
+            background-size: cover;
+        }
+        .registration-card {
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            background-color: rgba(255, 255, 255, 0.95);
+        }
+        .form-input {
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            padding: 0.75rem 1rem;
+            width: 100%;
+            transition: all 0.2s;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        .btn-primary {
+            background-color: #3b82f6;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            transition: all 0.2s;
+            font-weight: 500;
+            width: 100%;
+        }
+        .btn-primary:hover {
+            background-color: #2563eb;
+            transform: translateY(-1px);
+        }
+        .password-toggle {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #6b7280;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+    <div class="registration-card w-full max-w-md p-8 space-y-6 rounded-xl">
+        <div class="text-center">
+            <div class="mx-auto w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center mb-4">
+                <i class="fas fa-user text-blue-600 text-2xl"></i>
+            </div>
+            <h1 class="text-2xl font-bold text-gray-800">Create New Password</h1>
+            <p class="mt-2 text-gray-600">Enter your details:</p>
+        </div>
+        
+        <form  action="php/php/student_forgot_password.php" method="POST" class="space-y-4">
+            <div>
+                <label for="registrationNumber" class="block text-sm font-medium text-gray-700 mb-1">Registration Number</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-id-card text-gray-400"></i>
+                    </div>
+                    <input type="text" id="registrationNumber" name="registrationNumber" required 
+                           class="form-input pl-10" placeholder="Enter your registration number">
+                </div>
+            </div>
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Security Question</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-lock text-gray-400"></i>
+                    </div>
+                    <input type="securityQ" id="sqcurityQ" name="securityQ" required 
+                           class="form-input pl-10 pr-10" placeholder="What was the name of your first pet?">
+                    <span class="password-toggle" onclick="togglePassword('password')">
+                        <i class="far fa-eye"></i>
+                    </span>
+                </div>
+            </div>
+            
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-lock text-gray-400"></i>
+                    </div>
+                    <input type="password" id="password" name="password" required 
+                           class="form-input pl-10 pr-10" placeholder="Create a new password">
+                    <span class="password-toggle" onclick="togglePassword('password')">
+                        <i class="far fa-eye"></i>
+                    </span>
+                </div>
+                <p class="mt-1 text-xs text-gray-500">Must be at least 8 characters</p>
+            </div>
+            
+            <div>
+                <label for="confirmPassword" class="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-lock text-gray-400"></i>
+                    </div>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required 
+                           class="form-input pl-10 pr-10" placeholder="Confirm your password">
+                    <span class="password-toggle" onclick="togglePassword('confirmPassword')">
+                        <i class="far fa-eye"></i>
+                    </span>
+                </div>
+            </div>
+            
+            
+            <div class="space-y-3">
+                <button type="submit" class="btn-primary flex justify-center items-center">
+                    <i class="fas fa-user-plus mr-2"></i> Register Account
+                </button>
+                
+                <div class="text-center text-sm text-gray-500">
+                    Already have an account? <a href="student-login.php" class="text-blue-600 hover:text-blue-500">Login here</a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+       
+        // Keep your existing togglePassword function
+        function togglePassword(fieldId) {
+            const field = document.getElementById(fieldId);
+            const icon = field.nextElementSibling.querySelector('i');
+            if (field.type === "password") {
+                field.type = "text";
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                field.type = "password";
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+        </script>
+</body>
+</html>

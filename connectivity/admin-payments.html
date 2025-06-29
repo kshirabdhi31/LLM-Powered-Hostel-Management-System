@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fee Management | Hostel Admin</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="script.js" defer></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .sidebar {
+            transition: all 0.3s;
+            width: 300px;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            height: 100vh;
+        }
+        .sidebar a {
+            transition: all 0.3s;
+            margin: 0 8px;
+            border-radius: 8px;
+            padding: 10px 12px;
+        }
+        .sidebar a:hover {
+            transform: translateX(5px);
+        }
+        .sidebar li:nth-child(1) a:hover { background-color: #3b82f6; }
+        .sidebar li:nth-child(2) a:hover { background-color: #10b981; }
+        .sidebar li:nth-child(3) a:hover { background-color: #8b5cf6; }
+        .sidebar li:nth-child(4) a:hover { background-color: #f59e0b; }
+        .sidebar li:nth-child(5) a:hover { background-color: #ef4444; }
+        .sidebar li:nth-child(6) a:hover { background-color: #6366f1; }
+        .sidebar li:nth-child(7) a:hover { background-color: #ec4899; }
+        .sidebar li:nth-child(8) a:hover { background-color: #14b8a6; }
+    </style>
+</head>
+<body class="flex h-screen">
+    <!-- Sidebar (same as admin dashboard) -->
+    <div class="sidebar text-white p-6 hidden md:block">
+        <div class="flex items-center justify-center p-3 mb-10">
+            <i class="fas fa-user-shield text-4xl"></i>
+        </div>
+        <nav>
+            <ul class="space-y-2">
+                <li>
+                    <a href="admin-dashboard.html" class="flex items-center space-x-3 p-3 hover:bg-gray-700">
+                        <i class="fas fa-arrow-left text-xl w-6 text-center"></i>
+                        <span class="text-md">Back to Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="admin-students.html" class="flex items-center space-x-3 p-3 hover:bg-gray-700">
+                        <i class="fas fa-users text-xl w-6 text-center"></i>
+                        <span class="text-md">Student Details</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="admin-attendance.html" class="flex items-center space-x-3 p-3 hover:bg-gray-700">
+                        <i class="fas fa-calendar-check text-xl w-6 text-center"></i>
+                        <span class="text-md">Upload Attendance</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="admin-biometric.html" class="flex items-center space-x-3 p-3 hover:bg-gray-700">
+                        <i class="fas fa-fingerprint text-xl w-6 text-center"></i>
+                        <span class="text-md">Upload Biometric</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="admin-notices.html" class="flex items-center space-x-3 p-3 hover:bg-gray-700">
+                        <i class="fas fa-bullhorn text-xl w-6 text-center"></i>
+                        <span class="text-md">Upload Notices</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="admin-payments.html" class="flex items-center space-x-3 p-3 bg-gray-700">
+                        <i class="fas fa-money-check-alt text-xl w-6 text-center"></i>
+                        <span class="text-md">Check Fee Payments</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="admin-guests.html" class="flex items-center space-x-3 p-3 hover:bg-gray-700">
+                        <i class="fas fa-user-friends text-xl w-6 text-center"></i>
+                        <span class="text-md">Manage Guests</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="admin-maintenance.html" class="flex items-center space-x-3 p-3 hover:bg-gray-700">
+                        <i class="fas fa-tools text-xl w-6 text-center"></i>
+                        <span class="text-md">Maintenance Requests</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="admin-mess.html" class="flex items-center space-x-3 p-3 hover:bg-gray-700">
+                        <i class="fas fa-tools text-xl w-6 text-center"></i>
+                        <span class="text-md">Mess Details</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="admin-complaints.html" class="flex items-center space-x-3 p-3 hover:bg-gray-700">
+                        <i class="fas fa-exclamation-circle text-xl w-6 text-center"></i>
+                        <span class="text-md">Complaints</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../index.html" class="flex items-center space-x-3 p-3 hover:bg-gray-700 mt-8">
+                        <i class="fas fa-sign-out-alt text-xl w-6 text-center"></i>
+                        <span class="text-md">Logout</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-1 overflow-auto p-6">
+        <h1 class="text-2xl font-bold mb-6">Fee Management</h1>
+        
+        <!-- Student Selection and Summary -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+            <div class="bg-white rounded-lg shadow p-6 md:col-span-1">
+                <h2 class="text-lg font-semibold mb-4">Select Student</h2>
+                <div class="mb-4">
+                    <label class="block text-gray-700 mb-2">Student ID</label>
+                    <select id="studentSelect" class="w-full px-3 py-2 border rounded">
+                        <option value="">-- Select Student --</option>
+                        <!-- Options will be loaded via AJAX -->
+                    </select>
+                </div>
+                <div id="studentInfo" class="hidden">
+                    <div class="border-t pt-4 mt-4">
+                        <h3 class="font-medium">Student Details</h3>
+                        <p class="text-sm" id="studentName">Name: </p>
+                        <p class="text-sm" id="studentRoom">Room: </p>
+                        <p class="text-sm" id="studentType">Room Type: </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow p-6 md:col-span-2">
+                <h2 class="text-lg font-semibold mb-4">Fee Summary</h2>
+                <div class="grid grid-cols-3 gap-4">
+                    <div class="p-3 bg-blue-50 rounded">
+                        <p class="text-sm text-gray-500">Total Due</p>
+                        <p class="text-xl font-bold" id="totalDue">$0.00</p>
+                    </div>
+                    <div class="p-3 bg-green-50 rounded">
+                        <p class="text-sm text-gray-500">Amount Paid</p>
+                        <p class="text-xl font-bold text-green-600" id="amountPaid">$0.00</p>
+                    </div>
+                    <div class="p-3 bg-red-50 rounded">
+                        <p class="text-sm text-gray-500">Balance</p>
+                        <p class="text-xl font-bold text-red-600" id="balance">$0.00</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Fee Management Tools -->
+        <div class="bg-white rounded-lg shadow overflow-hidden mb-6">
+            <div class="p-4 border-b">
+                <h2 class="text-lg font-semibold">Fee Actions</h2>
+            </div>
+            <div class="p-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                    <h3 class="font-medium mb-2">Record Payment</h3>
+                    <div class="flex space-x-2">
+                        <input type="number" id="paymentAmount" class="form-input flex-1" placeholder="Amount">
+                        <button id="recordPaymentBtn" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">
+                            Record
+                        </button>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="font-medium mb-2">Generate Invoice</h3>
+                    <button id="generateInvoiceBtn" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 w-full">
+                        <i class="fas fa-file-invoice-dollar mr-2"></i> Generate
+                    </button>
+                </div>
+                <div>
+                    <h3 class="font-medium mb-2">Send Reminder</h3>
+                    <button id="sendReminderBtn" class="px-4 py-2 bg-yellow-600 text-white rounded hover:bg-yellow-700 w-full">
+                        <i class="fas fa-bell mr-2"></i> Send
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Payment History -->
+        <div class="bg-white rounded-lg shadow overflow-hidden">
+            <div class="p-4 border-b flex justify-between items-center">
+                <h2 class="text-lg font-semibold">Payment History</h2>
+                <div class="flex items-center space-x-2">
+                    <input type="text" id="searchPayments" class="form-input" placeholder="Search payments...">
+                </div>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Reference</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Amount</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Method</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200" id="paymentHistoryTable">
+                        <tr>
+                            <td colspan="6" class="text-center py-4">Select a student to view payments</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-6 w-full max-w-md">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-semibold" id="modalTitle">Record Payment</h3>
+                <button id="closeModal" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="paymentForm">
+                <input type="hidden" id="paymentStudentId">
+                <div class="mb-4">
+                    <label class="block text-gray-700 mb-2">Amount</label>
+                    <input type="number" id="modalPaymentAmount" class="w-full px-3 py-2 border rounded" required>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 mb-2">Payment Method</label>
+                    <select id="paymentMethod" class="w-full px-3 py-2 border rounded" required>
+                        <option value="Cash">Cash</option>
+                        <option value="Bank Transfer">Bank Transfer</option>
+                        <option value="Credit Card">Credit Card</option>
+                        <option value="Mobile Payment">Mobile Payment</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 mb-2">Payment Date</label>
+                    <input type="date" id="paymentDate" class="w-full px-3 py-2 border rounded" required>
+                </div>
+                <div class="flex justify-end space-x-2">
+                    <button type="button" id="cancelPayment" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
+                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+    $(document).ready(function() {
+        // Load students into dropdown
+        function loadStudents() {
+            $.ajax({
+                url: 'php/get_students.php',
+                type: 'GET',
+                success: function(response) {
+                    $('#studentSelect').html('<option value="">-- Select Student --</option>' + response);
+                },
+                error: function() {
+                    $('#studentSelect').html('<option value="">Error loading students</option>');
+                }
+            });
+        }
+
+        // Load payment history for selected student
+        function loadPaymentHistory(studentId) {
+            if (!studentId) {
+                $('#paymentHistoryTable').html('<tr><td colspan="6" class="text-center py-4">Select a student to view payments</td></tr>');
+                return;
+            }
+
+            $.ajax({
+                url: 'php/get_payment_history.php?student_id=' + studentId,
+                type: 'GET',
+                success: function(response) {
+                    $('#paymentHistoryTable').html(response);
+                },
+                error: function() {
+                    $('#paymentHistoryTable').html('<tr><td colspan="6" class="text-center py-4">Error loading payment history</td></tr>');
+                }
+            });
+        }
+
+        // Load student details and summary
+        function loadStudentDetails(studentId) {
+            if (!studentId) {
+                $('#studentInfo').addClass('hidden');
+                $('#totalDue').text('$0.00');
+                $('#amountPaid').text('$0.00');
+                $('#balance').text('$0.00');
+                return;
+            }
+
+            $.ajax({
+                url: 'php/get_student_details.php?student_id=' + studentId,
+                type: 'GET',
+                success: function(response) {
+                    const data = JSON.parse(response);
+                    $('#studentName').text('Name: ' + data.fullname);
+                    $('#studentRoom').text('Room: ' + data.block + ' - ' + data.room);
+                    $('#studentType').text('Room Type: ' + data.room_type);
+                    $('#studentInfo').removeClass('hidden');
+
+                    // Update summary
+                    $('#totalDue').text('$' + data.total_due);
+                    $('#amountPaid').text('$' + data.amount_paid);
+                    $('#balance').text('$' + data.balance);
+                },
+                error: function() {
+                    alert('Error loading student details');
+                }
+            });
+        }
+
+        // Student selection handler
+        $('#studentSelect').change(function() {
+            const studentId = $(this).val();
+            $('#paymentStudentId').val(studentId);
+            loadStudentDetails(studentId);
+            loadPaymentHistory(studentId);
+        });
+
+        // Record payment button
+        $('#recordPaymentBtn').click(function() {
+            const studentId = $('#studentSelect').val();
+            if (!studentId) {
+                alert('Please select a student first');
+                return;
+            }
+            $('#modalTitle').text('Record Payment for ' + $('#studentSelect option:selected').text());
+            $('#modalPaymentAmount').val('');
+            $('#paymentDate').val(new Date().toISOString().split('T')[0]);
+            $('#paymentModal').removeClass('hidden');
+        });
+
+        // Generate invoice button
+        $('#generateInvoiceBtn').click(function() {
+            const studentId = $('#studentSelect').val();
+            if (!studentId) {
+                alert('Please select a student first');
+                return;
+            }
+
+            if (confirm('Generate invoice for selected student?')) {
+                $.ajax({
+                    url: 'php/generate_invoice.php',
+                    type: 'POST',
+                    data: { student_id: studentId },
+                    success: function(response) {
+                        alert('Invoice generated successfully');
+                        loadStudentDetails(studentId);
+                        loadPaymentHistory(studentId);
+                    },
+                    error: function() {
+                        alert('Error generating invoice');
+                    }
+                });
+            }
+        });
+
+        // Send reminder button
+        $('#sendReminderBtn').click(function() {
+            const studentId = $('#studentSelect').val();
+            if (!studentId) {
+                alert('Please select a student first');
+                return;
+            }
+
+            if (confirm('Send payment reminder to selected student?')) {
+                $.ajax({
+                    url: 'php/send_reminder.php',
+                    type: 'POST',
+                    data: { student_id: studentId },
+                    success: function(response) {
+                        alert('Reminder sent successfully');
+                    },
+                    error: function() {
+                        alert('Error sending reminder');
+                    }
+                });
+            }
+        });
+
+        // Payment form submission
+        $('#paymentForm').submit(function(e) {
+            e.preventDefault();
+            const studentId = $('#paymentStudentId').val();
+            const amount = $('#modalPaymentAmount').val();
+            const method = $('#paymentMethod').val();
+            const date = $('#paymentDate').val();
+
+            $.ajax({
+                url: 'php/record_payment.php',
+                type: 'POST',
+                data: {
+                    student_id: studentId,
+                    amount: amount,
+                    method: method,
+                    date: date
+                },
+                success: function(response) {
+                    alert('Payment recorded successfully');
+                    $('#paymentModal').addClass('hidden');
+                    loadStudentDetails(studentId);
+                    loadPaymentHistory(studentId);
+                },
+                error: function() {
+                    alert('Error recording payment');
+                }
+            });
+        });
+
+        // Modal close handlers
+        $('#closeModal, #cancelPayment').click(function() {
+            $('#paymentModal').addClass('hidden');
+        });
+
+        // Initial load
+        loadStudents();
+    });
+    </script>
+</body>
+</html>

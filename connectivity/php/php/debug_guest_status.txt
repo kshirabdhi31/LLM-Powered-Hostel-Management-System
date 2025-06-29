@@ -1,0 +1,6 @@
+Array
+(
+    [studentId] => 
+    [visitId] => 
+    [status] => Pending
+)
